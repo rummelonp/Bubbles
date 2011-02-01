@@ -14,6 +14,7 @@
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
 		84B60A5412F835AD0076562C /* BBViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B60A5312F835AD0076562C /* BBViewController.m */; };
 		84B60B2312F85DC70076562C /* BBView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B60B2212F85DC70076562C /* BBView.m */; };
+		84B60BAF12F865490076562C /* BBBubbleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B60BAE12F865490076562C /* BBBubbleView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +30,8 @@
 		84B60A5312F835AD0076562C /* BBViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBViewController.m; sourceTree = "<group>"; };
 		84B60B2112F85DC70076562C /* BBView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBView.h; sourceTree = "<group>"; };
 		84B60B2212F85DC70076562C /* BBView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBView.m; sourceTree = "<group>"; };
+		84B60BAD12F865490076562C /* BBBubbleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBBubbleView.h; sourceTree = "<group>"; };
+		84B60BAE12F865490076562C /* BBBubbleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBBubbleView.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Bubbles-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Bubbles-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -55,6 +58,8 @@
 				84B60A5312F835AD0076562C /* BBViewController.m */,
 				84B60B2112F85DC70076562C /* BBView.h */,
 				84B60B2212F85DC70076562C /* BBView.m */,
+				84B60BAD12F865490076562C /* BBBubbleView.h */,
+				84B60BAE12F865490076562C /* BBBubbleView.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -169,6 +174,7 @@
 				1D3623260D0F684500981E51 /* BubblesAppDelegate.m in Sources */,
 				84B60A5412F835AD0076562C /* BBViewController.m in Sources */,
 				84B60B2312F85DC70076562C /* BBView.m in Sources */,
+				84B60BAF12F865490076562C /* BBBubbleView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

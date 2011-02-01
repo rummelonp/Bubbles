@@ -7,6 +7,7 @@
 //
 
 #import "BBView.h"
+#import "BBBubbleView.h"
 
 @implementation BBView
 
@@ -17,6 +18,9 @@
   self = [super initWithFrame:frame];
   if (self != nil) {
     [self setUserInteractionEnabled:YES];
+
+    bubbles = [[NSMutableArray alloc] init];
+
     UITapGestureRecognizer* singleTapGesture = [UITapGestureRecognizer alloc];
     [singleTapGesture initWithTarget:self
                               action:@selector(onSingleTap:)];
@@ -52,6 +56,14 @@
 - (void)onSingleTap:(UITapGestureRecognizer*)sender
 {
   LOG_METHOD;
+
+  CGPoint point = [sender locationInView:self];
+
+  BBBubbleView* bubble = [BBBubbleView bubbleWithPoint:point];
+
+  [bubbles addObject:bubble];
+
+  [self addSubview:bubble];
 }
 
 - (void)dealloc

@@ -1,5 +1,5 @@
 //
-//  BBView.h
+//  BBBubbleView.h
 //  Bubbles
 //
 //  Created by Kazuya Takeshima on 11/02/02.
@@ -8,12 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BBView : UIView
+@interface BBBubbleView : UIView
 {
-  UIImage* baseImage;
-  NSMutableArray* bubbles;
+  CGFloat pinchBeganScale;
+  CGSize pinchBeganSize;
 }
 
-- (void)setImage:(UIImage*)image;
++ (id)bubbleWithPoint:(CGPoint)point;
 
 @end
