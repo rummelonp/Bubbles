@@ -93,8 +93,8 @@ didFinishPickingMediaWithInfo:(NSDictionary*)info
 
   [self dismissModalViewControllerAnimated:YES];
 
-  // Do something...
-  // UIImage* originalImage = [info objectForKey:UIImagePickerControllerOriginalImage];
+  UIImage* originalImage = [info objectForKey:UIImagePickerControllerOriginalImage];
+  [bbView setImage:originalImage];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController*)picker

@@ -10,7 +10,9 @@
 
 @interface BBView : UIView
 {
-
+  UIImage* baseImage;
 }
+
+- (void)setImage:(UIImage*)image;
 
 @end

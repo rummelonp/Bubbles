@@ -24,12 +24,32 @@
 - (void)drawRect:(CGRect)rect
 {
   LOG_METHOD;
+
+  if (baseImage != nil) {
+    [baseImage drawInRect:rect];
+  }
+}
+
+- (void)setImage:(UIImage*)image
+{
+  LOG_METHOD;
+
+  if (baseImage != nil) {
+    [baseImage release];
+  }
+  baseImage = image;
+  [baseImage retain];
+  [self setNeedsDisplay];
 }
 
 - (void)dealloc
 {
   LOG_METHOD;
 
+  if (baseImage != nil) {
+    [baseImage release];
+    baseImage = nil;
+  }
   [super dealloc];
 }
 
