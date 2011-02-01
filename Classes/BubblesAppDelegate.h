@@ -8,11 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BubblesAppDelegate : NSObject <UIApplicationDelegate> {
-    UIWindow *window;
+@interface BubblesAppDelegate : NSObject <UIApplicationDelegate>
+{
+  UIWindow* window;
 }
 
-@property (nonatomic, retain) IBOutlet UIWindow *window;
+@property (nonatomic, retain) IBOutlet UIWindow* window;
 
 @end
 
