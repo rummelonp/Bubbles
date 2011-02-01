@@ -16,6 +16,13 @@
 
   self = [super initWithFrame:frame];
   if (self != nil) {
+    [self setUserInteractionEnabled:YES];
+    UITapGestureRecognizer* singleTapGesture = [UITapGestureRecognizer alloc];
+    [singleTapGesture initWithTarget:self
+                              action:@selector(onSingleTap:)];
+    [singleTapGesture setNumberOfTapsRequired:1];
+    [self addGestureRecognizer:singleTapGesture];
+    [singleTapGesture release];
   }
 
   return self;
@@ -40,6 +47,11 @@
   baseImage = image;
   [baseImage retain];
   [self setNeedsDisplay];
+}
+
+- (void)onSingleTap:(UITapGestureRecognizer*)sender
+{
+  LOG_METHOD;
 }
 
 - (void)dealloc
