@@ -9,6 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface BBViewController : UIViewController
+  <UIActionSheetDelegate,
+   UINavigationControllerDelegate,
+   UIImagePickerControllerDelegate>
 {
   UIToolbar* toolbar;
   UIBarButtonItem* cameraButton;

@@ -20,7 +20,7 @@
   cameraButton = [UIBarButtonItem alloc];
   [cameraButton initWithBarButtonSystemItem:UIBarButtonSystemItemCamera
                                      target:self
-                                     action:nil];
+                                     action:@selector(onClickCameraButton:)];
 
   // Make toolbar.
   toolbar = [UIToolbar alloc];
@@ -31,6 +31,73 @@
 
   // Add subviews.
   [self.view addSubview:toolbar];
+}
+
+- (void)onClickCameraButton:(id)sender
+{
+  LOG_METHOD;
+
+  UIActionSheet* cameraActionSheet = [UIActionSheet alloc];
+  [cameraActionSheet initWithTitle:nil
+                          delegate:self
+                 cancelButtonTitle:@"Cancel"
+            destructiveButtonTitle:nil
+                 otherButtonTitles:@"Photo Library", @"Photo Alubm", @"Camera", nil];
+  [cameraActionSheet autorelease];
+
+  [cameraActionSheet showInView:self.view];
+}
+
+- (void)actionSheet:(UIActionSheet*)actionSheet
+clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+  LOG_METHOD;
+
+  UIImagePickerControllerSourceType sourceType = 0;
+  switch (buttonIndex) {
+    case 0:
+      sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+      break;
+    case 1:
+      sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+      break;
+    case 2:
+      sourceType = UIImagePickerControllerSourceTypeCamera;
+      break;
+    default:
+      return;
+  }
+
+  if (![UIImagePickerController isSourceTypeAvailable:sourceType]) {
+    return;
+  }
+
+  UIImagePickerController* imagePicker = [[UIImagePickerController alloc] init];
+  [imagePicker setSourceType:sourceType];
+  [imagePicker setAllowsEditing:NO];
+  [imagePicker setDelegate:self];
+  [imagePicker autorelease];
+
+  [self presentModalViewController:imagePicker
+                          animated:YES];
+}
+
+- (void)imagePickerController:(UIImagePickerController*)picker
+didFinishPickingMediaWithInfo:(NSDictionary*)info
+{
+  LOG_METHOD;
+
+  [self dismissModalViewControllerAnimated:YES];
+
+  // Do something...
+  // UIImage* originalImage = [info objectForKey:UIImagePickerControllerOriginalImage];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController*)picker
+{
+  LOG_METHOD;
+
+  [self dismissModalViewControllerAnimated:YES];
 }
 
 - (void)didReceiveMemoryWarning
