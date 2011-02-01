@@ -7,12 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BBView.h"
 
 @interface BBViewController : UIViewController
   <UIActionSheetDelegate,
    UINavigationControllerDelegate,
    UIImagePickerControllerDelegate>
 {
+  BBView* bbView;
   UIToolbar* toolbar;
   UIBarButtonItem* cameraButton;
 }

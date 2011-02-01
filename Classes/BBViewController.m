@@ -16,6 +16,9 @@
 
   [super viewDidLoad];
 
+  // Make BB view.
+  bbView = [[BBView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+
   // Make toolbar buttons.
   cameraButton = [UIBarButtonItem alloc];
   [cameraButton initWithBarButtonSystemItem:UIBarButtonSystemItemCamera
@@ -30,6 +33,7 @@
   [toolbar setItems:[NSArray arrayWithObjects:cameraButton, nil]];
 
   // Add subviews.
+  [self.view addSubview:bbView];
   [self.view addSubview:toolbar];
 }
 
@@ -120,6 +124,7 @@ didFinishPickingMediaWithInfo:(NSDictionary*)info
 
   [cameraButton release];
   [toolbar release];
+  [bbView release];
   [super dealloc];
 }
 
