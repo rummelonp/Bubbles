@@ -10,7 +10,8 @@
 
 @interface BBViewController : UIViewController
 {
-
+  UIToolbar* toolbar;
+  UIBarButtonItem* cameraButton;
 }
 
 @end

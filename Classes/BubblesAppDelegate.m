@@ -18,6 +18,10 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {
   LOG_METHOD;
 
+  // Set status bar style.
+  [application setStatusBarStyle:UIBarStyleBlack];
+
+  // Make window and view controller.
   window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
   viewController = [[BBViewController alloc] init];
   [window addSubview:viewController.view];
