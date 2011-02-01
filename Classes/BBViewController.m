@@ -29,7 +29,7 @@
   [previewButton initWithTitle:@"Preview"
                          style:UIBarButtonItemStyleBordered
                         target:self
-                        action:nil];
+                        action:@selector(onClickPreviewButton:)];
 
   UIBarButtonItem* flexibleSpace = [UIBarButtonItem alloc];
   [flexibleSpace initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
@@ -62,6 +62,13 @@
   [cameraActionSheet autorelease];
 
   [cameraActionSheet showInView:self.view];
+}
+
+- (void)onClickPreviewButton:(id)sender
+{
+  LOG_METHOD;
+
+  [bbView preview];
 }
 
 - (void)actionSheet:(UIActionSheet*)actionSheet

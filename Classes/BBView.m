@@ -39,6 +39,9 @@
   if (baseImage != nil) {
     [baseImage drawInRect:rect];
   }
+  if (bubbleImage != nil) {
+    [bubbleImage drawInRect:rect];
+  }
 }
 
 - (void)setImage:(UIImage*)image
@@ -50,6 +53,18 @@
   }
   baseImage = image;
   [baseImage retain];
+  [self setNeedsDisplay];
+}
+
+- (void)preview
+{
+  LOG_METHOD;
+
+  if (bubbleImage != nil) {
+    [bubbleImage release];
+  }
+  bubbleImage = [BBBubbleView preview:bubbles];
+  [bubbleImage retain];
   [self setNeedsDisplay];
 }
 

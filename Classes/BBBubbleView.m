@@ -13,6 +13,9 @@
 static const float  LINE_WIDTH   = 5.0f;
 static const CGSize DEFAULT_SIZE = {80.0f, 80.0f};
 
+static const int IMAGE_HEIGHT = 480;
+static const int IMAGE_WIDTH  = 320;
+
 - (id)initWithFrame:(CGRect)frame
 {
   LOG_METHOD;
@@ -132,6 +135,83 @@ static const CGSize DEFAULT_SIZE = {80.0f, 80.0f};
   BBBubbleView* bubble = [[[self class] alloc] initWithFrame:rect];
 
   return bubble;
+}
+
++ (void)setHidden:(BOOL)hidden
+      withBubbles:(NSMutableArray*)bubbles
+{
+  LOG_METHOD;
+
+  for (int i = 0; i < [bubbles count]; i += 1) {
+    BBBubbleView* bubble = [bubbles objectAtIndex:i];
+    [bubble setHidden:hidden];
+  }
+}
+
++ (UIImage*)preview:(NSMutableArray*)bubbles
+{
+  LOG_METHOD;
+
+  // Hide editing bubbles.
+  [self setHidden:YES
+      withBubbles:bubbles];
+
+  // Create bitmap context.
+  CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+  CGContextRef context = CGBitmapContextCreate(NULL,
+                                               IMAGE_WIDTH,
+                                               IMAGE_HEIGHT,
+                                               8,
+                                               IMAGE_WIDTH * 4,
+                                               colorSpace,
+                                               kCGImageAlphaPremultipliedLast);
+
+  // Draw preview bubbles.
+  CGContextSetRGBFillColor(context, 1.0f, 0.0f, 0.5f, 1.0f);
+  CGContextFillRect(context, [[UIScreen mainScreen] bounds]);
+
+  for (int i = 0; i < [bubbles count]; i += 1) {
+    BBBubbleView* bubble = [bubbles objectAtIndex:i];
+    CGRect rect = [bubble frame];
+    rect.origin.y = IMAGE_HEIGHT - (rect.origin.y + rect.size.height);
+    CGContextSetRGBFillColor(context, 0.0f, 0.0f, 0.0f, 1.0f);
+    CGContextFillEllipseInRect(context, rect);
+  }
+
+  // Make temporary bitmap.
+  CGImageRef imageRef = CGBitmapContextCreateImage(context);
+
+  // Convert white to clear.
+  CGDataProviderRef imageDataProvider = CGImageGetDataProvider(imageRef);
+  CFDataRef imageData = CGDataProviderCopyData(imageDataProvider);
+  UInt8* buffer = (UInt8*)CFDataGetBytePtr(imageData);
+  size_t bytesPerRow = CGImageGetBytesPerRow(imageRef);
+  NSUInteger i, j;
+  for (j = 0; j < IMAGE_HEIGHT; j++) {
+    for (i = 0; i < IMAGE_WIDTH; i++) {
+      UInt8* tmp = buffer + (j * bytesPerRow) + (i * 4);
+      UInt8 r;
+      r = *tmp;
+      *(tmp + 3) = r;
+    }
+  }
+
+  // Make preview bubbles image.
+  CFDataRef dataRef = CFDataCreate(NULL, buffer, CFDataGetLength(imageData));
+  CGDataProviderRef dataProvider = CGDataProviderCreateWithCFData(dataRef);
+  CGImageRef image = CGImageCreate(IMAGE_WIDTH,
+                                   IMAGE_HEIGHT,
+                                   CGImageGetBitsPerComponent(imageRef),
+                                   CGImageGetBitsPerPixel(imageRef),
+                                   bytesPerRow,
+                                   colorSpace,
+                                   CGImageGetBitmapInfo(imageRef),
+                                   dataProvider,
+                                   NULL,
+                                   CGImageGetShouldInterpolate(imageRef),
+                                   CGImageGetRenderingIntent(imageRef));
+
+  return [[UIImage alloc] initWithCGImage:image];
 }
 
 @end

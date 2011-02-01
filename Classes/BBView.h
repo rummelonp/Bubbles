@@ -11,9 +11,12 @@
 @interface BBView : UIView
 {
   UIImage* baseImage;
+  UIImage* bubbleImage;
   NSMutableArray* bubbles;
 }
 
 - (void)setImage:(UIImage*)image;
+
+- (void)preview;
 
 @end
