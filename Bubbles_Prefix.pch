@@ -6,3 +6,17 @@
   #import <Foundation/Foundation.h>
   #import <UIKit/UIKit.h>
 #endif
+
+#ifdef DEBUG
+  #define LOG(...)     NSLog(__VA_ARGS__)
+  #define LOG_METHOD   NSLog(@"%@/%@", NSStringFromClass([self class]), NSStringFromSelector(_cmd))
+  #define LOG_POINT(p) NSLog(@"x:%f/y:%f", p.x, p.y)
+  #define LOG_SIZE(s)  NSLog(@"w:%f/h:%f", s.width, s.height)
+  #define LOG_RECT(r)  NSLog(@"x:%f/y:%f/w:%f/h:%f", r.origin.x, r.origin.y, r.size.width, r.size.height)
+#else
+  #define LOG(...)     ;
+  #define LOG_METHOD   ;
+  #define LOG_POINT(p) ;
+  #define LOG_SIZE(s)  ;
+  #define LOG_RECT(r)  ;
+#endif
