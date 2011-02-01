@@ -17,6 +17,7 @@
   BBView* bbView;
   UIToolbar* toolbar;
   UIBarButtonItem* cameraButton;
+  UIBarButtonItem* previewButton;
 }
 
 @end

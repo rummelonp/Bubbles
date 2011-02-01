@@ -25,12 +25,24 @@
                                      target:self
                                      action:@selector(onClickCameraButton:)];
 
+  previewButton = [UIBarButtonItem alloc];
+  [previewButton initWithTitle:@"Preview"
+                         style:UIBarButtonItemStyleBordered
+                        target:self
+                        action:nil];
+
+  UIBarButtonItem* flexibleSpace = [UIBarButtonItem alloc];
+  [flexibleSpace initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
+                                      target:nil
+                                      action:nil];
+  [flexibleSpace autorelease];
+
   // Make toolbar.
   toolbar = [UIToolbar alloc];
   [toolbar initWithFrame:CGRectMake(0.0f, 416.0f, 320.0f, 44.0f)];
   [toolbar setBarStyle:UIBarStyleBlack];
   [toolbar setTranslucent:YES];
-  [toolbar setItems:[NSArray arrayWithObjects:cameraButton, nil]];
+  [toolbar setItems:[NSArray arrayWithObjects:cameraButton, flexibleSpace, previewButton, nil]];
 
   // Add subviews.
   [self.view addSubview:bbView];
@@ -122,6 +134,7 @@ didFinishPickingMediaWithInfo:(NSDictionary*)info
 {
   LOG_METHOD;
 
+  [previewButton release];
   [cameraButton release];
   [toolbar release];
   [bbView release];
