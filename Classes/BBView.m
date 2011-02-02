@@ -11,6 +11,8 @@
 
 @implementation BBView
 
+@synthesize isPreviewing;
+
 - (id)initWithFrame:(CGRect)frame
 {
   LOG_METHOD;
@@ -56,6 +58,19 @@
   [self setNeedsDisplay];
 }
 
+- (void)edit
+{
+  LOG_METHOD;
+
+  if (bubbleImage != nil) {
+    [bubbleImage release];
+  }
+  [BBBubbleView edit:bubbles];
+  bubbleImage = nil;
+  isPreviewing = NO;
+  [self setNeedsDisplay];
+}
+
 - (void)preview
 {
   LOG_METHOD;
@@ -65,12 +80,19 @@
   }
   bubbleImage = [BBBubbleView preview:bubbles];
   [bubbleImage retain];
+  isPreviewing = YES;
   [self setNeedsDisplay];
 }
 
 - (void)onSingleTap:(UITapGestureRecognizer*)sender
 {
   LOG_METHOD;
+
+  if (isPreviewing ||
+      baseImage == nil)
+  {
+    return;
+  }
 
   CGPoint point = [sender locationInView:self];
 

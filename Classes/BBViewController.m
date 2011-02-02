@@ -68,7 +68,11 @@
 {
   LOG_METHOD;
 
-  [bbView preview];
+  if (bbView.isPreviewing) {
+    [bbView edit];
+  } else {
+    [bbView preview];
+  }
 }
 
 - (void)actionSheet:(UIActionSheet*)actionSheet

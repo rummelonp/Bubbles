@@ -16,6 +16,8 @@
 
 + (id)bubbleWithPoint:(CGPoint)point;
 
++ (void)edit:(NSMutableArray*)bubbles;
+
 + (UIImage*)preview:(NSMutableArray*)bubbles;
 
 @end

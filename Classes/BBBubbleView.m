@@ -148,6 +148,15 @@ static const int IMAGE_WIDTH  = 320;
   }
 }
 
++ (void)edit:(NSMutableArray*)bubbles
+{
+  LOG_METHOD;
+
+  // Show editing bubbles.
+  [self setHidden:NO
+      withBubbles:bubbles];
+}
+
 + (UIImage*)preview:(NSMutableArray*)bubbles
 {
   LOG_METHOD;

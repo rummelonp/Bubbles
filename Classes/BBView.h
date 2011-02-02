@@ -13,9 +13,15 @@
   UIImage* baseImage;
   UIImage* bubbleImage;
   NSMutableArray* bubbles;
+
+  BOOL isPreviewing;
 }
 
+@property (readonly) BOOL isPreviewing;
+
 - (void)setImage:(UIImage*)image;
+
+- (void)edit;
 
 - (void)preview;
 
