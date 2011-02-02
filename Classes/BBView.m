@@ -107,12 +107,16 @@
 {
   LOG_METHOD;
 
+  if (bubbleImage != nil) {
+    [bubbleImage release];
+    bubbleImage = nil;
+  }
   if (baseImage != nil) {
     [baseImage release];
     baseImage = nil;
   }
+  [bubbles release];
   [super dealloc];
 }
-
 
 @end
