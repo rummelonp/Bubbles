@@ -183,6 +183,7 @@ static const int IMAGE_WIDTH  = 320;
     BBBubbleView* bubble = [bubbles objectAtIndex:i];
     CGRect rect = [bubble frame];
     rect.origin.y = IMAGE_HEIGHT - (rect.origin.y + rect.size.height);
+    rect.size = CGSizeMake(rect.size.width - LINE_WIDTH, rect.size.height - LINE_WIDTH);
     CGContextSetRGBFillColor(context, 0.0f, 0.0f, 0.0f, 1.0f);
     CGContextFillEllipseInRect(context, rect);
   }
