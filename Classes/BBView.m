@@ -7,7 +7,6 @@
 //
 
 #import "BBView.h"
-#import "BBBubbleView.h"
 
 @implementation BBView
 
@@ -115,11 +114,22 @@
 
   CGPoint point = [sender locationInView:self];
 
-  BBBubbleView* bubble = [BBBubbleView bubbleWithPoint:point];
+  BBBubbleView* bubble = [BBBubbleView bubbleWithPoint:point
+                                              delegate:self];
 
   [bubbles addObject:bubble];
 
   [self addSubview:bubble];
+}
+
+- (void)onRemoveFromSuperview:(id)bubble
+{
+  LOG_METHOD;
+
+  if ([bubbles containsObject:bubble]) {
+    [bubbles removeObject:bubble];
+    [bubble release];
+  }
 }
 
 - (void)dealloc

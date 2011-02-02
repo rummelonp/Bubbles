@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BBBubbleView.h"
 
 @interface BBView : UIView
+  <BBBubbleViewDelegate>
 {
   UIImage* baseImage;
   UIImage* bubbleImage;

@@ -8,13 +8,22 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol BBBubbleViewDelegate
+
+- (void)onRemoveFromSuperview:(id)bubble;
+
+@end
+
 @interface BBBubbleView : UIView
 {
+  id<BBBubbleViewDelegate> delegate;
+
   CGFloat pinchBeganScale;
   CGSize pinchBeganSize;
 }
 
-+ (id)bubbleWithPoint:(CGPoint)point;
++ (id)bubbleWithPoint:(CGPoint)point
+             delegate:(id<BBBubbleViewDelegate>)aDelegate;
 
 + (void)setHidden:(BOOL)hidden
       withBubbles:(NSMutableArray*)bubbles;

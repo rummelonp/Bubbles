@@ -17,12 +17,15 @@ static const int IMAGE_HEIGHT = 480;
 static const int IMAGE_WIDTH  = 320;
 
 - (id)initWithFrame:(CGRect)frame
+           delegate:(id<BBBubbleViewDelegate>)aDelegate
 {
   LOG_METHOD;
 
   self = [super initWithFrame:frame];
   if (self != nil) {
     [self setOpaque:NO];
+
+    delegate = aDelegate;
 
     UIPanGestureRecognizer* panGesture = [UIPanGestureRecognizer alloc];
     [panGesture initWithTarget:self
@@ -71,9 +74,21 @@ static const int IMAGE_WIDTH  = 320;
   point.y = destination.y - (size.height / 2);
   rect.origin = point;
 
-  // Move bubble.
-  [self setFrame:rect];
-  [self setNeedsDisplay];
+  UIGestureRecognizerState state = [sender state];
+  if (state == UIGestureRecognizerStateEnded &&
+      self.center.y <= 0)
+  {
+    // Remove bubble.
+    [self setHidden:YES];
+    [self removeFromSuperview];
+    if (delegate != nil) {
+      [delegate onRemoveFromSuperview:self];
+    }
+  } else {
+    // Move bubble.
+    [self setFrame:rect];
+    [self setNeedsDisplay];
+  }
 }
 
 - (void)onPinch:(UIPinchGestureRecognizer*)sender
@@ -122,6 +137,7 @@ static const int IMAGE_WIDTH  = 320;
 }
 
 + (id)bubbleWithPoint:(CGPoint)point
+             delegate:(id<BBBubbleViewDelegate>)aDelegate
 {
   LOG_METHOD;
 
@@ -132,7 +148,7 @@ static const int IMAGE_WIDTH  = 320;
                             point.y - (DEFAULT_SIZE.height / 2));
 
   // Make bubble.
-  BBBubbleView* bubble = [[[self class] alloc] initWithFrame:rect];
+  BBBubbleView* bubble = [[[self class] alloc] initWithFrame:rect delegate:aDelegate];
 
   return bubble;
 }
