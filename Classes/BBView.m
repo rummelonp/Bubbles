@@ -41,6 +41,7 @@
   if (baseImage != nil) {
     [baseImage drawInRect:rect];
   }
+
   if (bubbleImage != nil) {
     [bubbleImage drawInRect:rect];
   }
@@ -55,7 +56,15 @@
   }
   baseImage = image;
   [baseImage retain];
-  [self setNeedsDisplay];
+
+  if ([bubbles count] > 0) {
+    [BBBubbleView setHidden:YES
+                withBubbles:bubbles];
+    [bubbles release];
+    bubbles = [[NSMutableArray alloc] init];
+  }
+
+  [self edit];
 }
 
 - (void)edit
@@ -65,9 +74,12 @@
   if (bubbleImage != nil) {
     [bubbleImage release];
   }
-  [BBBubbleView edit:bubbles];
   bubbleImage = nil;
+
+  [BBBubbleView edit:bubbles];
+
   isPreviewing = NO;
+
   [self setNeedsDisplay];
 }
 
@@ -75,12 +87,19 @@
 {
   LOG_METHOD;
 
+  if (baseImage == nil) {
+    return;
+  }
+
   if (bubbleImage != nil) {
     [bubbleImage release];
   }
+
   bubbleImage = [BBBubbleView preview:bubbles];
   [bubbleImage retain];
+
   isPreviewing = YES;
+
   [self setNeedsDisplay];
 }
 

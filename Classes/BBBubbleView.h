@@ -16,6 +16,9 @@
 
 + (id)bubbleWithPoint:(CGPoint)point;
 
++ (void)setHidden:(BOOL)hidden
+      withBubbles:(NSMutableArray*)bubbles;
+
 + (void)edit:(NSMutableArray*)bubbles;
 
 + (UIImage*)preview:(NSMutableArray*)bubbles;
