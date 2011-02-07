@@ -10,6 +10,7 @@
 
 @implementation BBBubbleView
 
+static const float TOLETANCE  = 10.0f;
 static const float LINE_WIDTH = 5.0f;
 
 static const int IMAGE_HEIGHT = 480;
@@ -62,6 +63,15 @@ static CGSize LAST_SIZE = {150.0f, 150.0f};
   CGContextStrokeEllipseInRect(context, bubbleRect);
 }
 
+- (BOOL)pointInBubble:(CGPoint)point
+{
+  float x = point.x - self.center.x;
+  float y = point.y - self.center.y;
+  float r = (self.frame.size.width / 2) + TOLETANCE;
+
+  return (x * x) + (y * y) < (r * r);
+}
+
 - (void)onPan:(UIPanGestureRecognizer*)sender
 {
   LOG_METHOD;
@@ -72,6 +82,10 @@ static CGSize LAST_SIZE = {150.0f, 150.0f};
   CGRect  rect  = [self frame];
   CGSize  size  = rect.size;
   CGPoint point = rect.origin;
+
+  if (![self pointInBubble:destination]) {
+    return;
+  }
 
   BOOL remove = NO;
   switch (state) {
