@@ -10,8 +10,9 @@
 
 @implementation BBBubbleView
 
-static const float TOLETANCE  = 10.0f;
-static const float LINE_WIDTH = 5.0f;
+static const float TOLETANCE    = 10.0f;
+static const float LINE_WIDTH   = 5.0f;
+static const float OFFSET_WIDTH = 10.0f;
 
 static const int IMAGE_HEIGHT = 480;
 static const int IMAGE_WIDTH  = 320;
@@ -51,10 +52,10 @@ static CGSize LAST_SIZE = {150.0f, 150.0f};
 
   // Calculate size.
   CGSize size = rect.size;
-  CGRect bubbleRect = CGRectMake(LINE_WIDTH,
-                                 LINE_WIDTH,
-                                 size.width  - (LINE_WIDTH * 2),
-                                 size.height - (LINE_WIDTH * 2));
+  CGRect bubbleRect = CGRectMake(LINE_WIDTH + OFFSET_WIDTH,
+                                 LINE_WIDTH + OFFSET_WIDTH,
+                                 size.width  - (LINE_WIDTH * 2) - (OFFSET_WIDTH * 2),
+                                 size.height - (LINE_WIDTH * 2) - (OFFSET_WIDTH * 2));
 
   // Draw bubble.
   CGContextRef context = UIGraphicsGetCurrentContext();
@@ -230,9 +231,14 @@ static CGSize LAST_SIZE = {150.0f, 150.0f};
 
   for (int i = 0; i < [bubbles count]; i += 1) {
     BBBubbleView* bubble = [bubbles objectAtIndex:i];
-    CGRect rect = [bubble frame];
-    rect.origin.y = IMAGE_HEIGHT - (rect.origin.y + rect.size.height);
-    rect.size = CGSizeMake(rect.size.width - LINE_WIDTH, rect.size.height - LINE_WIDTH);
+    CGRect  rect  = [bubble frame];
+    CGSize  size  = rect.size;
+    CGPoint point = rect.origin;
+    point.y = IMAGE_HEIGHT - (point.y + size.height);
+    rect = CGRectMake(point.x + OFFSET_WIDTH,
+                      point.y + OFFSET_WIDTH,
+                      size.width  - LINE_WIDTH - (OFFSET_WIDTH * 2),
+                      size.height - LINE_WIDTH - (OFFSET_WIDTH * 2));
     CGContextSetRGBFillColor(context, 0.0f, 0.0f, 0.0f, 1.0f);
     CGContextFillEllipseInRect(context, rect);
   }
