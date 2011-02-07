@@ -37,10 +37,29 @@
 {
   LOG_METHOD;
 
+  // Draw base photo image by scale aspect fill.
   if (baseImage != nil) {
-    [baseImage drawInRect:rect];
+    CGRect  imageRect  = rect;
+    CGSize  baseSize   = rect.size;
+    CGSize  imageSize  = baseImage.size;
+    CGPoint imagePoint = rect.origin;
+    if ((imageSize.width / baseSize.width) < (imageSize.height / baseSize.height)) {
+      float scale = imageSize.width / baseSize.width;
+      imageSize.width  = baseSize.width;
+      imageSize.height = imageSize.height / scale;
+      imagePoint.y = (baseSize.height - imageSize.height) / 2;
+    } else {
+      float scale = imageSize.height / baseSize.height;
+      imageSize.height = baseSize.height;
+      imageSize.width  = imageSize.width / scale;
+      imagePoint.x = (baseSize.width - imageSize.width) / 2;
+    }
+    imageRect.size   = imageSize;
+    imageRect.origin = imagePoint;
+    [baseImage drawInRect:imageRect];
   }
 
+  // Draw bubbles on base image.
   if (bubbleImage != nil) {
     [bubbleImage drawInRect:rect];
   }
