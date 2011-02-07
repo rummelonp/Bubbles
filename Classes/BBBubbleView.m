@@ -10,11 +10,12 @@
 
 @implementation BBBubbleView
 
-static const float  LINE_WIDTH   = 5.0f;
-static const CGSize DEFAULT_SIZE = {80.0f, 80.0f};
+static const float LINE_WIDTH = 5.0f;
 
 static const int IMAGE_HEIGHT = 480;
 static const int IMAGE_WIDTH  = 320;
+
+static CGSize LAST_SIZE = {150.0f, 150.0f};
 
 - (id)initWithFrame:(CGRect)frame
            delegate:(id<BBBubbleViewDelegate>)aDelegate
@@ -124,6 +125,9 @@ static const int IMAGE_WIDTH  = 320;
   point.y = destination.y - (size.height / 2);
   rect.origin = point;
 
+  // Save last size.
+  LAST_SIZE = rect.size;
+
   // Resize bubble.
   [self setFrame:rect];
   [self setNeedsDisplay];
@@ -143,9 +147,9 @@ static const int IMAGE_WIDTH  = 320;
 
   // Calclate rect.
   CGRect rect = CGRectZero;
-  rect.size   = DEFAULT_SIZE;
-  rect.origin = CGPointMake(point.x - (DEFAULT_SIZE.width  / 2),
-                            point.y - (DEFAULT_SIZE.height / 2));
+  rect.size   = LAST_SIZE;
+  rect.origin = CGPointMake(point.x - (LAST_SIZE.width  / 2),
+                            point.y - (LAST_SIZE.height / 2));
 
   // Make bubble.
   BBBubbleView* bubble = [[[self class] alloc] initWithFrame:rect delegate:aDelegate];
