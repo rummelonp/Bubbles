@@ -66,19 +66,34 @@ static CGSize LAST_SIZE = {150.0f, 150.0f};
 {
   LOG_METHOD;
 
-  // Calculate point.
+  UIGestureRecognizerState state = [sender state];
+
   CGPoint destination = [sender locationInView:[self superview]];
   CGRect  rect  = [self frame];
   CGSize  size  = rect.size;
   CGPoint point = rect.origin;
-  point.x = destination.x - (size.width  / 2);
-  point.y = destination.y - (size.height / 2);
+
+  BOOL remove = NO;
+  switch (state) {
+    case UIGestureRecognizerStateBegan:
+      panPointOffset = CGPointMake(self.center.x - destination.x,
+                                   self.center.y - destination.y);
+      break;
+    case UIGestureRecognizerStateChanged:
+      break;
+    case UIGestureRecognizerStateEnded:
+      if (self.center.y <= 0) {
+        remove = YES;
+      }
+      break;
+  }
+
+  // Calculate point.
+  point.x = destination.x + panPointOffset.x - (size.width  / 2);
+  point.y = destination.y + panPointOffset.y - (size.height / 2);
   rect.origin = point;
 
-  UIGestureRecognizerState state = [sender state];
-  if (state == UIGestureRecognizerStateEnded &&
-      self.center.y <= 0)
-  {
+  if (remove) {
     // Remove bubble.
     [self setHidden:YES];
     [self removeFromSuperview];

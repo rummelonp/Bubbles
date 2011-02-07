@@ -18,6 +18,8 @@
 {
   id<BBBubbleViewDelegate> delegate;
 
+  CGPoint panPointOffset;
+
   CGFloat pinchBeganScale;
   CGSize pinchBeganSize;
 }
