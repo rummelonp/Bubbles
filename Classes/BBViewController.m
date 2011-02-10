@@ -7,6 +7,7 @@
 //
 
 #import "BBViewController.h"
+#import <QuartzCore/QuartzCore.h>
 
 @implementation BBViewController
 
@@ -34,7 +35,7 @@
   saveButton = [UIBarButtonItem alloc];
   [saveButton initWithBarButtonSystemItem:UIBarButtonSystemItemSave
                                    target:self
-                                   action:nil];
+                                   action:@selector(onClickSaveButton:)];
   saveButton.enabled = NO;
 
   UIBarButtonItem* flexibleSpace = [UIBarButtonItem alloc];
@@ -83,6 +84,23 @@
     saveButton.enabled = YES;
     [bbView preview];
   }
+}
+
+- (void)onClickSaveButton:(id)sender
+{
+  LOG_METHOD;
+
+  CGRect rect = [[UIScreen mainScreen] bounds];
+  UIGraphicsBeginImageContext(rect.size);
+
+  CGContextRef context = UIGraphicsGetCurrentContext();
+  [[UIColor blackColor] set];
+  CGContextFillRect(context, rect);
+  [bbView.layer renderInContext:context];
+
+  UIImage* image = UIGraphicsGetImageFromCurrentImageContext();
+  UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
+  UIGraphicsEndImageContext();
 }
 
 - (void)actionSheet:(UIActionSheet*)actionSheet
