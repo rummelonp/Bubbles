@@ -76,11 +76,11 @@
   LOG_METHOD;
 
   if (bbView.isPreviewing) {
-    previewButton.title = @"Edit";
+    previewButton.title = @"Preview";
     saveButton.enabled = NO;
     [bbView edit];
   } else {
-    previewButton.title = @"Preview";
+    previewButton.title = @"Edit";
     saveButton.enabled = YES;
     [bbView preview];
   }
