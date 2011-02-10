@@ -31,6 +31,12 @@
                         target:self
                         action:@selector(onClickPreviewButton:)];
 
+  saveButton = [UIBarButtonItem alloc];
+  [saveButton initWithBarButtonSystemItem:UIBarButtonSystemItemSave
+                                   target:self
+                                   action:nil];
+  saveButton.enabled = NO;
+
   UIBarButtonItem* flexibleSpace = [UIBarButtonItem alloc];
   [flexibleSpace initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
                                       target:nil
@@ -42,7 +48,7 @@
   [toolbar initWithFrame:CGRectMake(0.0f, 416.0f, 320.0f, 44.0f)];
   [toolbar setBarStyle:UIBarStyleBlack];
   [toolbar setTranslucent:YES];
-  [toolbar setItems:[NSArray arrayWithObjects:cameraButton, flexibleSpace, previewButton, nil]];
+  [toolbar setItems:[NSArray arrayWithObjects:cameraButton, flexibleSpace, previewButton, saveButton, nil]];
 
   // Add subviews.
   [self.view addSubview:bbView];
@@ -69,8 +75,12 @@
   LOG_METHOD;
 
   if (bbView.isPreviewing) {
+    previewButton.title = @"Edit";
+    saveButton.enabled = NO;
     [bbView edit];
   } else {
+    previewButton.title = @"Preview";
+    saveButton.enabled = YES;
     [bbView preview];
   }
 }

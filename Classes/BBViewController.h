@@ -18,6 +18,7 @@
   UIToolbar* toolbar;
   UIBarButtonItem* cameraButton;
   UIBarButtonItem* previewButton;
+  UIBarButtonItem* saveButton;
 }
 
 @end
